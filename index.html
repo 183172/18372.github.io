@@ -1,904 +1,204 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <!-- 官网配置 -->
-    <link rel="manifest" href="data:application/manifest+json,{
-        &quot;name&quot;: &quot;CC配置 官方网站&quot;,
-        &quot;short_name&quot;: &quot;CC配置&quot;,
-        &quot;description&quot;: &quot;CC配置文件官方入口 · 认准即可&quot;,
-        &quot;start_url&quot;: &quot;.&quot;,
-        &quot;display&quot;: &quot;standalone&quot;,
-        &quot;background_color&quot;: &quot;#0b1424&quot;,
-        &quot;theme_color&quot;: &quot;#1e3c72&quot;
-    }">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="CC配置官方网站">
-    <title>CC配置 · 官方网站</title>
-    <style>
-        /* ========== 官网旗舰版 V5：流畅炫酷入场 ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KEM · Official</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Roboto,sans-serif}
+body{
+    width:100%;min-height:100vh;
+    background:#060810;
+    color:#eef2ff;
+    display:grid;place-items:center;
+    padding:16px;
+    overflow:hidden;
+}
 
-        :root {
-            --bg-primary: #0b1424;
-            --bg-secondary: #111d32;
-            --surface: #1c2a42;
-            --surface-light: #233b5a;
-            --surface-dark: #152238;
-            --primary: #1e3c72;
-            --primary-dark: #122b4f;
-            --primary-light: #2d538a;
-            --primary-glow: #2d538a80;
-            --accent: #c9a04b;
-            --accent-light: #dbb66c;
-            --accent-dark: #a07d3a;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e8ff;
-            --text-muted: #9aafd0;
-            --border-soft: rgba(255, 255, 255, 0.08);
-            --border-medium: rgba(255, 255, 255, 0.15);
-            --border-strong: rgba(255, 255, 255, 0.2);
-            --shadow-card: 0 30px 50px -15px rgba(0, 0, 0, 0.8);
-            --shadow-btn: 0 10px 20px -8px rgba(0, 0, 0, 0.6);
-            --shadow-btn-hover: 0 15px 30px -10px rgba(0, 0, 0, 0.8), 0 5px 15px rgba(30, 60, 114, 0.4);
-            --shadow-btn-pressed: 0 5px 12px -5px rgba(0, 0, 0, 0.8);
-            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+/* 动态星云背景（纯CSS，性能友好） */
+.bg{
+    position:fixed;inset:0;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(59,130,246,.18) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(96,165,250,.18) 0%, transparent 40%),
+        radial-gradient(circle at 40% 50%, rgba(147,197,253,.1) 0%, transparent 50%);
+    z-index:-1;
+    animation:bgShift 12s ease-in-out infinite alternate;
+}
+@keyframes bgShift{
+    0%{transform:translate(0,0) scale(1)}
+    100%{transform:translate(-2%,-2%) scale(1.02)}
+}
 
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-primary: #f0f5fd;
-                --bg-secondary: #e2ebf7;
-                --surface: #ffffff;
-                --surface-light: #f5faff;
-                --surface-dark: #e5eefc;
-                --primary: #1e3c72;
-                --primary-dark: #0f2645;
-                --primary-light: #2d4b82;
-                --primary-glow: #2d4b8280;
-                --accent: #b8860b;
-                --accent-light: #c99c2e;
-                --accent-dark: #966b09;
-                --text-primary: #0a1a2c;
-                --text-secondary: #1f3a5f;
-                --text-muted: #4f6f8f;
-                --border-soft: rgba(0, 20, 40, 0.06);
-                --border-medium: rgba(0, 20, 40, 0.12);
-                --border-strong: rgba(0, 20, 40, 0.2);
-                --shadow-card: 0 30px 50px -20px rgba(0, 20, 40, 0.3);
-                --shadow-btn: 0 8px 16px -6px rgba(0, 20, 40, 0.2);
-                --shadow-btn-hover: 0 15px 25px -10px rgba(0, 20, 40, 0.3), 0 5px 15px rgba(30, 60, 114, 0.2);
-                --shadow-btn-pressed: 0 4px 10px -4px rgba(0, 20, 40, 0.2);
-            }
-        }
+/* 开场3D旋转+霓虹光效 */
+.splash{
+    position:fixed;inset:0;
+    background:#060810;
+    display:grid;place-items:center;
+    z-index:999;
+    transition:opacity 1s ease;
+}
+.splash.hide{opacity:0;pointer-events:none}
+.logo-big{
+    font-size:72px;font-weight:800;
+    background:linear-gradient(135deg,#3b82f6,#60a5fa,#2563eb);
+    background-size:200% 200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    animation:kemGlowIn 1.4s cubic-bezier(0.25,1,0.5,1) forwards;
+    filter:drop-shadow(0 0 12px rgba(59,130,246,.4));
+}
+@keyframes kemGlowIn{
+    0%{transform:scale(0.3) rotateY(-120deg);opacity:0;filter:blur(6px) drop-shadow(0 0 0 rgba(59,130,246,0))}
+    60%{transform:scale(1.15) rotateY(0);opacity:1}
+    100%{transform:scale(1);opacity:1;filter:blur(0) drop-shadow(0 0 14px rgba(59,130,246,.5))}
+}
 
-        body {
-            background: var(--bg-primary);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            color: var(--text-primary);
-            line-height: 1.5;
-            position: relative;
-            overflow-x: hidden;
-        }
+/* 主卡片：毛玻璃+流光边框 */
+.card{
+    width:100%;max-width:380px;
+    background:rgba(15,20,35,.75);
+    backdrop-filter:blur(12px); /* 适度模糊，不卡手机 */
+    border-radius:24px;padding:40px 28px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 25px 70px rgba(0,0,0,.4),0 0 0 1px rgba(59,130,246,.12);
+    opacity:0;
+    transform:translateY(30px);
+    animation:fadeUp 1s .6s ease forwards;
+    position:relative;
+    overflow:hidden;
+}
+/* 流光边框 */
+.card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,#3b82f6,#60a5fa,#2563eb,#3b82f6);
+    background-size:300% 100%;
+    animation:flow 5s linear infinite;
+}
+@keyframes flow{0%{background-position:0 0}100%{background-position:300% 0}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-        /* 高级背景纹理 */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 60, 114, 0.2) 0%, transparent 30%),
-                radial-gradient(circle at 90% 70%, rgba(201, 160, 75, 0.1) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-        }
+/* 头部品牌+认证徽章 */
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.brand{font-size:24px;font-weight:700}
+.brand span{
+    background:linear-gradient(135deg,#3b82f6,#60a5fa);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.badge{
+    font-size:10px;font-weight:600;padding:4px 10px;
+    border-radius:999px;
+    background:rgba(59,130,246,.15);
+    color:#93c5fd;
+    border:1px solid rgba(59,130,246,.2);
+    animation:pulse 2.5s infinite alternate;
+}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(59,130,246,.2)}100%{box-shadow:0 0 0 8px transparent}}
 
-        /* ===== 流畅炫酷入场动画（轻量优化版） ===== */
-        .splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0b1424 0%, #1c2a42 50%, #0b1424 100%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.8s ease;
-            pointer-events: none;
-            will-change: transform, opacity;
-        }
-        .splash-screen.hide {
-            transform: translateY(-100%) scale(0.9);
-            opacity: 0;
-        }
+/* 标题区 */
+.title{text-align:center;margin-bottom:24px}
+.title h1{font-size:22px;font-weight:600;margin-bottom:8px}
+.title p{color:#94a3b8;font-size:14px;line-height:1.5}
 
-        /* 简洁光晕背景（轻量） */
-        .splash-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(201, 160, 75, 0.2) 0%, transparent 40%),
-                        radial-gradient(circle at 70% 60%, rgba(30, 60, 114, 0.2) 0%, transparent 40%);
-            animation: glowPulse 3s infinite alternate;
-            will-change: opacity;
-        }
-        @keyframes glowPulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
+/* 群号：霓虹发光 */
+.group{
+    background:rgba(30,41,59,.45);
+    border-radius:18px;padding:22px;text-align:center;
+    margin-bottom:28px;
+    border:1px solid rgba(255,255,255,.06);
+}
+.group small{color:#94a3b8;font-size:12px}
+.group .num{
+    font-size:28px;font-weight:700;
+    margin-top:8px;
+    background:linear-gradient(135deg,#3b82f6,#60a5fa);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    animation:glow 3s infinite alternate;
+}
+@keyframes glow{0%{filter:brightness(1) drop-shadow(0 0 6px rgba(59,130,246,.2))}100%{filter:brightness(1.2) drop-shadow(0 0 14px rgba(59,130,246,.4))}}
 
-        /* 简洁旋转光晕 */
-        .splash-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            border: 2px solid rgba(201, 160, 75, 0.2);
-            border-radius: 50%;
-            animation: ringRotate 8s linear infinite;
-            will-change: transform;
-        }
-        .splash-ring::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 2px solid rgba(30, 60, 114, 0.2);
-            border-radius: 50%;
-            animation: ringRotateReverse 6s linear infinite;
-        }
-        @keyframes ringRotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        @keyframes ringRotateReverse {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
-        }
+/* 按钮：渐变+微动效 */
+.btns{display:flex;flex-direction:column;gap:12px}
+.btn{
+    padding:16px;border-radius:16px;
+    border:none;font-size:16px;font-weight:600;
+    cursor:pointer;transition:all .25s ease;
+}
+.btn.main{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    color:#fff;
+    box-shadow:0 6px 20px rgba(59,130,246,.25);
+}
+.btn.sec{
+    background:rgba(49,58,74,.5);
+    color:#eef2ff;
+    border:1px solid rgba(255,255,255,.08);
+}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.btn:active{transform:translateY(0) scale(.98)}
 
-        .splash-content {
-            text-align: center;
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            padding: 2rem;
-            z-index: 10;
-            animation: contentScaleIn 1s var(--transition-bounce) forwards;
-            will-change: transform, opacity;
-        }
-        @keyframes contentScaleIn {
-            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-            50% { transform: scale(1.1) rotate(2deg); }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-
-        /* 标志动画（轻量） */
-        .splash-logo {
-            font-size: 8rem;
-            filter: drop-shadow(0 0 20px #c9a04b) drop-shadow(0 0 40px #1e3c72);
-            animation: logoDrop 1s var(--transition-bounce) forwards, logoFloat 2s infinite 1s;
-            margin-bottom: 1rem;
-            will-change: transform;
-        }
-        @keyframes logoDrop {
-            0% { transform: translateY(-200px) scale(0.2); opacity: 0; }
-            60% { transform: translateY(20px) scale(1.1); }
-            80% { transform: translateY(-10px) scale(0.95); }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        @keyframes logoFloat {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); filter: drop-shadow(0 0 30px #c9a04b) drop-shadow(0 0 60px #1e3c72); }
-            100% { transform: translateY(0); }
-        }
-
-        .splash-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            letter-spacing: 8px;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, #c9a04b, #1e3c72);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: titleFadeIn 0.8s 0.2s both;
-            text-shadow: 0 0 20px rgba(201, 160, 75, 0.5);
-            will-change: opacity, transform;
-        }
-        @keyframes titleFadeIn {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .splash-sub {
-            font-size: 1.4rem;
-            color: #e0e8ff;
-            margin-bottom: 2.5rem;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px #c9a04b;
-            animation: fadeUp 0.8s 0.3s both;
-            will-change: opacity, transform;
-        }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== 流畅进度条 ===== */
-        .progress-container {
-            width: 80%;
-            max-width: 500px;
-            margin: 2rem auto;
-            position: relative;
-            animation: progressAppear 0.6s 0.4s both;
-            will-change: opacity, transform;
-        }
-        @keyframes progressAppear {
-            from { opacity: 0; transform: scaleX(0.5); }
-            to { opacity: 1; transform: scaleX(1); }
-        }
-
-        .progress-bg {
-            width: 100%;
-            height: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(201, 160, 75, 0.3);
-            border: 1px solid rgba(201, 160, 75, 0.2);
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #1e3c72, #c9a04b);
-            border-radius: 30px;
-            box-shadow: 0 0 20px #c9a04b;
-            animation: progressLoad 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            will-change: width;
-        }
-        @keyframes progressLoad {
-            0% { width: 0%; }
-            20% { width: 25%; }
-            40% { width: 45%; }
-            60% { width: 70%; }
-            80% { width: 88%; }
-            100% { width: 100%; }
-        }
-
-        .progress-percent {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #c9a04b;
-            text-shadow: 0 0 20px #c9a04b;
-            margin-top: 0.8rem;
-            animation: percentPulse 0.8s infinite alternate;
-            will-change: transform, opacity;
-        }
-        @keyframes percentPulse {
-            from { opacity: 0.8; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1.02); text-shadow: 0 0 30px #c9a04b; }
-        }
-
-        /* ===== 主页面 (完整保留) ===== */
-        .main-content {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.8s ease, transform 0.8s var(--transition-bounce);
-            width: 100%;
-            max-width: 720px;
-            position: relative;
-            z-index: 1;
-            will-change: opacity, transform;
-        }
-        .main-content.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .card {
-            background: var(--surface);
-            border-radius: 2.4rem;
-            box-shadow: var(--shadow-card), 0 0 0 1px var(--border-soft) inset;
-            padding: 3rem 3rem;
-            position: relative;
-            border: 1px solid var(--border-medium);
-            backdrop-filter: blur(2px);
-            transition: transform 0.3s ease;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1.2rem;
-            border-bottom: 1px solid var(--border-medium);
-            position: relative;
-        }
-        .brand::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--accent);
-            filter: drop-shadow(0 0 8px var(--accent));
-            transform: rotate(0deg);
-            transition: transform 0.3s ease;
-        }
-        .logo:hover .logo-icon {
-            transform: rotate(10deg);
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: var(--text-primary);
-        }
-        .logo-text span {
-            color: var(--accent);
-            font-weight: 700;
-            position: relative;
-        }
-        .logo-text span::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--accent);
-            opacity: 0.5;
-        }
-
-        .official-tag {
-            background: var(--primary-dark);
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            color: var(--accent);
-            border: 1px solid var(--border-medium);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-        }
-
-        .qq-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-bottom: 1.8rem;
-            background: var(--surface-dark);
-            padding: 1rem 2rem;
-            border-radius: 100px;
-            border: 1px solid var(--border-medium);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 16px -8px rgba(0,0,0,0.5);
-        }
-        .qq-icon {
-            background: linear-gradient(145deg, #1e3c72, #0f2645);
-            width: 64px;
-            height: 64px;
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border-strong);
-            box-shadow: 0 8px 12px -6px rgba(0, 0, 0, 0.5);
-        }
-        .qq-icon svg {
-            width: 38px;
-            height: 38px;
-            fill: white;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        .qq-text {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-        }
-        .qq-text strong {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-left: 0.5rem;
-            font-weight: 700;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-
-        .group-number {
-            background: var(--primary);
-            padding: 0.8rem 2.8rem;
-            border-radius: 70px;
-            display: inline-block;
-            margin: 0 auto 2.2rem;
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            border: 1px solid var(--border-medium);
-            box-shadow: var(--shadow-btn), inset 0 1px 0 rgba(255,255,255,0.2);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-        }
-        .group-number:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.3);
-        }
-
-        .button-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            margin: 2.2rem 0 1.2rem;
-        }
-
-        .button-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
-
-        .action-btn {
-            border: none;
-            padding: 1.3rem 0.8rem;
-            border-radius: 80px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            cursor: pointer;
-            transition: all 0.2s var(--transition-bounce);
-            border: 1px solid var(--border-strong);
-            box-shadow: var(--shadow-btn), inset 0 1px 0 rgba(255,255,255,0.2);
-            background-size: 200% auto;
-            width: 100%;
-            line-height: 1.2;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .action-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .action-btn:active::after {
-            width: 300px;
-            height: 300px;
-            opacity: 1;
-            transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.2s ease-out;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            filter: brightness(1.15);
-            box-shadow: var(--shadow-btn-hover), inset 0 1px 0 rgba(255,255,255,0.3);
-        }
-
-        .action-btn:active {
-            transform: translateY(2px) scale(0.98);
-            box-shadow: var(--shadow-btn-pressed), inset 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .btn-qq { background: linear-gradient(145deg, #1e3c72, #122c52); }
-        .btn-telegram { background: linear-gradient(145deg, #2a6a9c, #1c4e76); }
-        .btn-kuaishou { background: linear-gradient(145deg, #7b4b8a, #5f3a6b); }
-        .btn-file { background: linear-gradient(145deg, #2f855a, #236b48); }
-
-        .btn-telegram.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .force-link {
-            text-align: center;
-            margin: 1.2rem 0 1.8rem;
-        }
-        .force-link a {
-            color: var(--text-muted);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--border-medium);
-            font-size: 0.85rem;
-            padding: 0.3rem 0.8rem;
-            transition: all 0.2s ease;
-            display: inline-block;
-        }
-        .force-link a:hover {
-            color: var(--accent);
-            transform: translateY(-1px);
-            border-bottom-color: var(--accent);
-        }
-
-        .official-info {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2.2rem;
-            padding-top: 1.8rem;
-            border-top: 1px solid var(--border-medium);
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            position: relative;
-        }
-        .official-info::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 30%;
-            width: 40%;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-            opacity: 0.5;
-        }
-
-        .official-info a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--border-medium);
-            transition: all 0.2s ease;
-            padding: 0.2rem 0.4rem;
-        }
-        .official-info a:hover {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .icp {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            padding: 0.2rem 0.8rem;
-            background: var(--surface-dark);
-            border-radius: 40px;
-            border: 1px solid var(--border-soft);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-        }
-
-        .toolbar {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        .toolbar-btn {
-            width: 52px;
-            height: 52px;
-            background: var(--surface);
-            border: 1px solid var(--border-medium);
-            border-radius: 50%;
-            color: var(--text-secondary);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s var(--transition-bounce);
-            box-shadow: var(--shadow-btn);
-            backdrop-filter: blur(4px);
-        }
-        .toolbar-btn:hover {
-            transform: rotate(90deg) scale(1.1);
-            background: var(--primary);
-            color: white;
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-        .toolbar-menu {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            background: var(--surface);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-medium);
-            border-radius: 24px;
-            padding: 0.6rem;
-            display: none;
-            flex-direction: column;
-            gap: 0.3rem;
-            min-width: 170px;
-            box-shadow: var(--shadow-card);
-        }
-        .toolbar-menu.show {
-            display: flex;
-            animation: slideUp 0.2s ease;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .toolbar-menu-item {
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 0.7rem 1.2rem;
-            border-radius: 40px;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-        .toolbar-menu-item:hover {
-            background: var(--surface-light);
-            color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        @media (max-width: 600px) {
-            body { padding: 1rem; }
-            .card { padding: 2rem 1.5rem; }
-            .brand { flex-direction: column; align-items: start; gap: 0.8rem; }
-            .official-tag { align-self: flex-start; }
-            .qq-badge { flex-direction: column; text-align: center; padding: 1.5rem; }
-            .group-number { font-size: 1.6rem; padding: 0.6rem 2rem; }
-            .button-row { grid-template-columns: 1fr; }
-            .toolbar { bottom: 20px; right: 20px; }
-            
-            .splash-logo { font-size: 5rem; }
-            .splash-title { font-size: 2.8rem; }
-            .splash-sub { font-size: 1rem; }
-        }
-    </style>
+/* 底部 */
+.foot{margin-top:24px;text-align:center;font-size:12px;color:#94a3b8}
+.foot strong{color:#93c5fd}
+</style>
 </head>
 <body>
-    <!-- 流畅炫酷入场动画（轻量优化版） -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="splash-glow"></div>
-        <div class="splash-ring"></div>
-        <div class="splash-content">
-            <div class="splash-logo">🛡️</div>
-            <h1 class="splash-title">CC配置</h1>
-            <div class="splash-sub">官方网站 · 认准即可</div>
-            <div class="progress-container">
-                <div class="progress-bg">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-percent" id="progressPercent">0%</div>
-            </div>
-        </div>
+
+<div class="bg"></div>
+
+<!-- 开场遮罩 -->
+<div class="splash" id="splash">
+    <div class="logo-big">KEM</div>
+</div>
+
+<!-- 主内容 -->
+<div class="card">
+    <div class="head">
+        <div class="brand">KEM<span>官方</span></div>
+        <div class="badge">AUTHORIZED</div>
+    </div>
+    
+    <div class="title">
+        <h1>官方交流社群</h1>
+        <p>加入官方渠道，获取最新资源与服务支持</p>
     </div>
 
-    <!-- 主页面 - 完整保留 -->
-    <div class="main-content" id="mainContent">
-        <div class="card">
-            <div class="brand">
-                <div class="logo">
-                    <span class="logo-icon">🛡️</span>
-                    <div class="logo-text">CC<span>配置</span></div>
-                </div>
-                <div class="official-tag">官方网站</div>
-            </div>
-
-            <div class="qq-badge">
-                <div class="qq-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M22 11.5C22 16.7467 17.7467 21 12.5 21H11.5C6.2533 21 2 16.7467 2 11.5V8.5C2 3.2533 6.2533 1 11.5 1H12.5C17.7467 1 22 3.2533 22 8.5V11.5Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                        <circle cx="9" cy="10" r="2" fill="currentColor"/><circle cx="15" cy="10" r="2" fill="currentColor"/>
-                        <path d="M8.5 15.5C8.5 15.5 10 17.5 12 17.5C14 17.5 15.5 15.5 15.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <div class="qq-text">官方QQ群 <strong>1082223192</strong></div>
-            </div>
-
-            <h1>加入交流群</h1>
-            <div class="group-number">1082223192</div>
-
-            <div class="button-grid">
-                <div class="button-row">
-                    <button class="action-btn btn-qq" onclick="handleQQClick()"><span>📋</span> 复制QQ群</button>
-                    <button id="telegramBtn" class="action-btn btn-telegram" onclick="handleTelegramClick()"><span>✈️</span> Telegram频道</button>
-                </div>
-                <div class="button-row">
-                    <button class="action-btn btn-kuaishou" onclick="handleKuaiShouClick()"><span>📱</span> 快手作者主页</button>
-                    <button class="action-btn btn-file" onclick="handleFileJump()"><span>📦</span> 一键领取文件</button>
-                </div>
-            </div>
-
-            <div class="force-link"><a href="#" onclick="forceTelegramJump(); return false;">🔒 Telegram强制跳转（不检测）</a></div>
-
-            <div class="official-info">
-                <a href="#" onclick="copyQQ(); return false;">1082223192</a>
-                <a href="#" onclick="copyTG(); return false;">@Cc5202Love</a>
-                <a href="#" onclick="copyKuaiShou(); return false;">Tg-CCAV886</a>
-                <span class="icp">京ICP备2025xxxx号</span>
-            </div>
-            <div class="copyright">© 2025 CC配置 · 认准即可</div>
-        </div>
+    <div class="group">
+        <small>官方 QQ 群号</small>
+        <div class="num">1082223192</div>
     </div>
 
-    <!-- 工具栏 -->
-    <div class="toolbar">
-        <div class="toolbar-btn" onclick="toggleToolbarMenu()">⚙️</div>
-        <div class="toolbar-menu" id="toolbarMenu">
-            <a class="toolbar-menu-item" onclick="copyQQ(); return false;">📋 复制QQ群号</a>
-            <a class="toolbar-menu-item" onclick="copyTG(); return false;">📋 复制@Cc5202Love</a>
-            <a class="toolbar-menu-item" onclick="copyKuaiShou(); return false;">📋 复制快手号</a>
-            <a class="toolbar-menu-item" onclick="toggleTheme()">🌓 深色/浅色</a>
-        </div>
+    <div class="btns">
+        <button class="btn main" onclick="copyText('1082223192')">复制 QQ 群</button>
+        <button class="btn sec" onclick="window.open('https://t.me/KEMGFTp','_blank')">Telegram</button>
+        <button class="btn sec" onclick="window.open('https://new.818fka.com/shop/wdCc','_blank')">官方卡网</button>
     </div>
 
-    <script>
-        (function() {
-            // ==================== 入场动画控制 ====================
-            const splashScreen = document.getElementById('splashScreen');
-            const mainContent = document.getElementById('mainContent');
-            const progressFill = document.getElementById('progressFill');
-            const progressPercent = document.getElementById('progressPercent');
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 1;
-                if (progress <= 100) {
-                    progressPercent.textContent = progress + '%';
-                }
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        splashScreen.classList.add('hide');
-                        mainContent.classList.add('show');
-                        setTimeout(() => {
-                            splashScreen.style.display = 'none';
-                        }, 1000);
-                    }, 200);
-                }
-            }, 20); // 稍快一点，让动画更流畅
+    <div class="foot">官方频道：<strong>@KEMGFTp</strong></div>
+</div>
 
-            // ==================== 工具函数 ====================
-            function showToast(message) { 
-                alert(message);
-            }
-            
-            function copyToClipboard(text) { 
-                return new Promise((resolve) => { 
-                    const ta = document.createElement('textarea'); 
-                    ta.value = text; 
-                    document.body.appendChild(ta); 
-                    ta.select(); 
-                    document.execCommand('copy'); 
-                    document.body.removeChild(ta); 
-                    resolve(); 
-                }); 
-            }
-            
-            function vibrate() {}
+<script>
+// 复制功能（兼容手机）
+function copyText(text){
+    navigator.clipboard.writeText(text).then(()=>{
+        alert("已复制：" + text);
+    }).catch(()=>{
+        const input=document.createElement("input");
+        input.value=text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        document.body.removeChild(input);
+        alert("已复制：" + text);
+    });
+}
 
-            const TG_LINK = 'https://t.me/Cc5202Love';
-            const QQ_NUM = '1082223192';
-            const KUAISHOU_ID = 'Tg-CCAV886';
-            const KUAISHOU_SCHEME = 'kwai://profile/' + KUAISHOU_ID;
-            const KUAISHOU_WEB = 'https://www.kuaishou.com/profile/' + KUAISHOU_ID;
-            const FILE_LINK = 'https://new.818fka.com/shop/wdCc';
+// 自动隐藏开场
+window.onload = function(){
+    setTimeout(()=>{
+        document.getElementById('splash').classList.add('hide');
+    }, 1600);
+}
+</script>
 
-            window.handleQQClick = function() { 
-                copyToClipboard(QQ_NUM).then(()=>{ 
-                    showToast('已复制: '+QQ_NUM); 
-                }); 
-            };
-            
-            window.copyQQ = function(e) { 
-                if(e) e.preventDefault(); 
-                copyToClipboard(QQ_NUM).then(()=>{ 
-                    showToast('已复制: '+QQ_NUM); 
-                }); 
-            };
-            
-            window.copyTG = function(e) { 
-                if(e) e.preventDefault(); 
-                copyToClipboard('@Cc5202Love').then(()=>{ 
-                    showToast('已复制: @Cc5202Love'); 
-                }); 
-            };
-            
-            window.copyKuaiShou = function(e) { 
-                if(e) e.preventDefault(); 
-                copyToClipboard(KUAISHOU_ID).then(()=>{ 
-                    showToast('已复制: '+KUAISHOU_ID); 
-                }); 
-            };
-            
-            window.handleKuaiShouClick = function() { 
-                showToast('正在跳转快手作者主页...'); 
-                window.location.href = KUAISHOU_SCHEME; 
-                setTimeout(()=>{ 
-                    if(document.visibilityState==='visible') 
-                        window.open(KUAISHOU_WEB,'_blank'); 
-                },500); 
-            };
-            
-            window.forceTelegramJump = function() { 
-                window.open(TG_LINK,'_blank'); 
-            };
-            
-            window.handleFileJump = function() { 
-                showToast('正在打开文件页面...'); 
-                window.open(FILE_LINK, '_blank');
-            };
-
-            window.handleTelegramClick = function() { 
-                window.open(TG_LINK,'_blank'); 
-            };
-
-            window.toggleToolbarMenu = function() { 
-                document.getElementById('toolbarMenu').classList.toggle('show'); 
-            };
-            document.addEventListener('click', function(e) { 
-                const m=document.getElementById('toolbarMenu'); 
-                const btn=document.querySelector('.toolbar-btn'); 
-                if(btn && !btn.contains(e.target) && !m.contains(e.target)) 
-                    m.classList.remove('show'); 
-            });
-
-            window.toggleTheme = function() { 
-                document.body.classList.toggle('dark-theme'); 
-            };
-        })();
-    </script>
 </body>
 </html>
